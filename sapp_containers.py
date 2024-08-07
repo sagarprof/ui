@@ -32,7 +32,7 @@ tab1, tab2 = st.tabs(["Chatbot", "Metrics"])
 # dialog box and function
 # @st.dialog("Detailed Metrics",width='large')
 def details(df):
-        with st.container(height=500):
+        with st.container(height=500,border=True):
             st.subheader('Filtered Dataframe')
             st.dataframe(
                 df,
@@ -77,13 +77,23 @@ if st.session_state['file_data']:
 
     # Display the DataFrame in the sidebar
     st.sidebar.subheader("Uploaded files")
-    st.sidebar.dataframe(df_files)
+    selected_file=st.sidebar.dataframe(df_files,
+                        use_container_width=True,
+                        hide_index=True,
+                        on_select="rerun",
+                        selection_mode="single-row",
+                        )
+    
+    if selected_row := selected_file.selection.rows:
+        new_df = df_files.iloc[selected_row]
+        # st.sidebar.dataframe(new_df)
+        
+        selected_file=new_df['Name of the file'].iloc[0]
+        # st.sidebar.write(selected_file)
 
-    # Corrected code for selectbox:
-    selected_file = st.sidebar.selectbox("Select a file to view", df_files['Name of the file'].tolist())  # Convert to list of strings
+        # Store the selected file in session state
+        st.session_state['selected_file'] = selected_file
 
-    # Store the selected file in session state
-    st.session_state['selected_file'] = selected_file
 
 # Update current_tab based on user interaction 
 if st.sidebar.visible:
@@ -108,12 +118,12 @@ else:
 
             with st.container(height=300):
                 event = st.dataframe(
-                    df,
-                    use_container_width=True,
-                    hide_index=True,
-                    on_select="rerun",
-                    selection_mode="single-row",
-                )
+                                df,
+                                use_container_width=True,
+                                hide_index=True,
+                                on_select="rerun",
+                                selection_mode="single-row",
+                            )
 
             df2 = df.copy()
             df2['score_x'] = df['score'] * 2
