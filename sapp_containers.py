@@ -1,7 +1,8 @@
- 
+
 # ------------------------------------------------------------------------
-# containerised dataframes on the same page
+# variation 1-containerised dataframes on the same page
 # broader view
+# variation 2- added checkbox in sidebar dataframe 
 # -------------------------------------------------------------------------
 import streamlit as st
 import pandas as pd
