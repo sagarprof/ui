@@ -13,6 +13,18 @@ import time
 import os
 st.set_page_config(layout="wide")
 
+# Calculate metrics
+def calculate_metrics():
+    df = pd.read_excel('scores.xlsx')
+    total_rules = len(df)
+    average_score = df['euclidean_score'].mean()
+    
+    red_count = df[(df['euclidean_score'] > 0.10) & (df['euclidean_score'] <= 0.75)].shape[0]
+    amber_count = df[(df['euclidean_score'] > 0.75) & (df['euclidean_score'] <= 0.85)].shape[0]
+    green_count = df[df['euclidean_score'] > 0.85].shape[0]
+    
+    return total_rules, average_score, red_count, amber_count, green_count
+
 # Function to create a new folder with a timestamp
 def create_folder():
     folder_name = time.strftime("%Y%m%d-%H%M%S")
@@ -110,6 +122,81 @@ if current_tab == "Chatbot":
 else:
     with tab2:
         st.header(":red[Metrics Page]")
+
+            # Calculate metrics
+        total_rules, average_score, red_count, amber_count, green_count = calculate_metrics()
+        
+        # Define colors for the metric boxes
+        colors = {
+            "Total Rules": "lightblue",
+            "Average": "lightgreen",
+            "Red": "red",
+            "Amber": "orange",
+            "Green": "green"
+        }
+        
+        # Display metrics with custom HTML and CSS
+        st.markdown(f"""
+        <style>
+        .metric-box {{
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            font-weight: bold;
+            width: 150px;  /* Set a fixed width */
+            height: 100px; /* Set a fixed height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }}
+        </style>
+        """, unsafe_allow_html=True)
+        
+        # Layout with uniform boxes
+        col1, col2, col3,col4, col5= st.columns(5)
+        
+        with col1:
+            st.markdown(f"""
+            <div class="metric-box" style="background-color: {colors['Total Rules']}">
+                Total Rules<br>{total_rules}
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col2:
+            st.markdown(f"""
+            <div class="metric-box" style="background-color: {colors['Average']}">
+                Average<br>{average_score:.2f}
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col3:
+            st.markdown(f"""
+            <div class="metric-box" style="background-color: {colors['Red']}">
+                Red<br>{red_count}
+            </div>
+            """, unsafe_allow_html=True)
+        
+        
+        
+        with col4:
+            st.markdown(f"""
+            <div class="metric-box" style="background-color: {colors['Amber']}">
+                Amber<br>{amber_count}
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col5:
+            st.markdown(f"""
+            <div class="metric-box" style="background-color: {colors['Green']}">
+                Green<br>{green_count}
+            </div>
+            """, unsafe_allow_html=True)
+
+
         # Display the selected file content
         if 'selected_file' in st.session_state and st.session_state['selected_file']:
             file_path = os.path.join(st.session_state['folder_name'], st.session_state['selected_file'])
