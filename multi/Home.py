@@ -8,8 +8,7 @@ import time
 # load_dotenv()
 
 # Initialize OpenAI API
-api_key = your openai key
-openai.api_key = api_key
+api_key ='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'
 
 st.title(':red[Chatbot]')
 
