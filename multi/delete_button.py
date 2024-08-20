@@ -977,9 +977,9 @@ REPO_FOLDER = "repo"
 os.makedirs(REPO_FOLDER, exist_ok=True)  # Ensure the repo folder exists   
 
 # with dialog box and function
-@st.dialog(f"❗",width='large')
+@st.dialog(f'Are you sure do you want to delete {file_name}?',width='large')
 def delete_file(file_name):
-    st.subheader('❗Are you sure do you want to delete {selected_file_name}?')
+    st.subheader()
     if st.button('Ok'):
         file_path = os.path.join(REPO_FOLDER, file_name)
         with st.status(f"⚠️ Deleting {file_name}..........."):
@@ -1117,8 +1117,8 @@ if st.session_state['file_data']:
         
                 # with dialog box
 
-        st.session_state['selected_file'] = selected_file_name
-        selected_file_name=selected_file_name
+        # st.session_state['selected_file'] = selected_file_name
+        selected_file_name=st.session_state.get('selected_file',None)
         if st.sidebar.button('Delete file'):
             delete_file(selected_file_name)
 
