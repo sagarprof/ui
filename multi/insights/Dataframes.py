@@ -12,10 +12,10 @@ st.set_page_config(layout="wide")
 REPO_FOLDER = "repo"
 os.makedirs(REPO_FOLDER, exist_ok=True)  # Ensure the repo folder exists 
 
-@st.dialog(f" ",width='large')
+@st.dialog(f"Delete Upload",width='small')
 def delete_file(selected_file_name):
-        st.title(f":red[❗Are you sure you want to delete file '{selected_file_name}' ?]")
-        _,col_dialogN, col_dialogY = st.columns([7,1, 1])
+        st.warning(f"❗Are you sure you want to delete file '{selected_file_name}' ?")
+        _,col_dialogN, col_dialogY = st.columns([6,2,2])
         with col_dialogN:
             st.write("")
             # if st.button('No'):
@@ -24,7 +24,7 @@ def delete_file(selected_file_name):
         status_placeholder = st.empty()
         with col_dialogY:
 
-            if st.button('Yes'):
+            if st.button('Yes',use_container_width=True):
                 file_path = os.path.join(REPO_FOLDER, selected_file_name)
                 
                 with status_placeholder,st.spinner(f"Deleting {selected_file_name}..."):
@@ -105,7 +105,22 @@ if 'file_data' not in st.session_state:
     st.session_state['current_tab'] = "Chatbot"
     st.session_state['df'] = pd.DataFrame()
 
-st.title('Insights')
+# Custom CSS to align the title
+st.markdown(
+    """
+    <style>
+    .title {
+        text-align: center;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Streamlit app with custom CSS class for the title
+st.markdown('<h1 class="title">Insights</h1>', unsafe_allow_html=True)
+
+# st.title(':red[Insights]')
 st.sidebar.title("Upload Excel Files")
 with st.sidebar.expander("Upload Here"):
     uploaded_files = st.file_uploader("Choose Excel files", accept_multiple_files=True, type=['xlsx', 'xls'])
@@ -145,9 +160,14 @@ if st.session_state['file_data']:
         selected_file_name = new_df['file_name'].iloc[0]
 
         st.session_state['selected_file'] = selected_file_name
-        if st.sidebar.button('Delete file'):
-            delete_file(selected_file_name)
-            # delete_file(selected_file_name)
+        with st.sidebar:
+            col_delete1,col_delete2 = st.columns([5,2])
+            with col_delete1:
+                st.write(' ')
+            with col_delete2:
+                if st.sidebar.button('Delete file'):
+                    delete_file(selected_file_name)
+                    # delete_file(selected_file_name)
 
         st.header(":red[Metrics Page]")
 
