@@ -1,7 +1,44 @@
 import streamlit as st
 from PIL import Image
-import openai
+# import openai
 import time
+from streamlit_option_menu import option_menu
+
+
+
+
+# horizontal Menu
+
+selected = option_menu(None, ["APM", "Rules to DTP", "DTP to Rules"], 
+    icons=['house', 'cloud-upload', "list-task"], 
+    menu_icon="cast", default_index=0, orientation="horizontal",
+    styles={
+        "container": {"padding": "0!important", "background-color": "#f0f4f8"},  # Faint blue-gray background
+        "icon": {"color": "#ff5722", "font-size": "25px"},  # Orange for icons
+        "nav-link": {"font-size": "15px", "text-align": "left", "margin":"0px", "--hover-color": "#e0e6ed"},  # Light blue-gray hover
+        "nav-link-selected": {"background-color": "#004080", "color": "#ffffff"},  # Softer navy blue for selected link
+    }
+)
+
+
+
+
+st.markdown(
+    """
+    <style>
+    .title {
+        text-align: center;
+        color: red; /* Text color red */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+# Streamlit app with custom CSS class for the title
+st.markdown(f'<h1 class="title">{selected}</h1>', unsafe_allow_html=True)
+# ####################################
+# if -elif-else block of old code
+######################################
 
 # Load environment variables (if needed)
 # from dotenv import load_dotenv
@@ -9,8 +46,6 @@ import time
 
 # Initialize OpenAI API
 api_key ='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'
-
-st.title(':red[Chatbot]')
 
 # Load images
 jet = Image.open('jetlogo.png')

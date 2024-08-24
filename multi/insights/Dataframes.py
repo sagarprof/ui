@@ -12,9 +12,13 @@ st.set_page_config(layout="wide")
 REPO_FOLDER = "repo"
 os.makedirs(REPO_FOLDER, exist_ok=True)  # Ensure the repo folder exists 
 
-@st.dialog(f"Delete Upload",width='small')
+@st.dialog(" ⛔ Delete Upload",width='small')
 def delete_file(selected_file_name):
-        st.warning(f"❗Are you sure you want to delete file '{selected_file_name}' ?")
+        # st.divider()
+        # st.write("---")
+        # ❗🛑 ‼️ 💡🚩♻ ♻️  ⚠
+        # https://emojidb.org/delete-emojis
+        st.warning(f"Are you sure you want to delete file '{selected_file_name}' ?")
         _,col_dialogN, col_dialogY = st.columns([6,2,2])
         with col_dialogN:
             st.write("")
@@ -111,6 +115,7 @@ st.markdown(
     <style>
     .title {
         text-align: center;
+        color: red; /* Text color red */
     }
     </style>
     """,

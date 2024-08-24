@@ -1,19 +1,15 @@
 import streamlit as st
 
 
-APM = st.Page(
-    "chatbots/APM.py", title="APM", icon=":material/dashboard:", default=True
-)
-Rules1 = st.Page("chatbots/Rules1.py", title="Rules1", icon=":material/bug_report:")
-Rules2 = st.Page(
-    "chatbots/Rules2.py", title="Rules2", icon=":material/notification_important:"
+Bot = st.Page(
+    "chatbots/bot.py", title="Bots", icon=":material/search:", default=True
 )
 
-Insights = st.Page("insights/Dataframes.py", title="Insights", icon=":material/search:")
+Insights = st.Page("insights/dataframes.py", title="Insights", icon=":material/dashboard:")
 
 pg = st.navigation(
     {
-        "Chatbots": [APM, Rules1, Rules2],
+        "Chatbots": [Bot],
         "Dataframes": [Insights],
     }
 )
