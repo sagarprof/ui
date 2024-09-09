@@ -13,6 +13,9 @@ pg = st.navigation(
         "Dataframes": [Insights],
     }
 )
+# userid='sp111'
 
 
+# https//128.10.0.1:8080/{userid}/Bot
+# https//128.10.0.1:8080/{userid}/
 pg.run()

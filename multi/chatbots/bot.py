@@ -118,9 +118,20 @@ import os
 # Initialize OpenAI API
 # openai.api_key = api_key
 
+#========================================
+# retrieving from string query param -
+#========================================
+
+# https://your_app.streamlit.app/?userid=sp111
+
+# userid=st.query_params.userid
+# st.write(userid)
+
 # Initialize images
 jet = Image.open('jetlogo.png')
 human = Image.open('yellow.png')
+
+
 
 def get_api_response(query):
     try:
